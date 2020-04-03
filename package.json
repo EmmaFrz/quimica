@@ -1,0 +1,14 @@
+{
+  "name": "quimica",
+  "version": "1.0.0",
+  "description": "Proyecto de backend de los graficos de aguas andinas",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Emmanuel",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  }
+}
