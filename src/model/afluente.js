@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 //Calculo caudal en metros cubicos
-export const caudal_diario_m3 = (totalizador, totalizadorAnterior) => {
+const caudal_diario_m3 = (totalizador, totalizadorAnterior) => {
     if(totalizadorAnterior === ''){
         return;
     }else{
@@ -17,7 +17,7 @@ export const caudal_diario_m3 = (totalizador, totalizadorAnterior) => {
 const caudal_diario_ls = (totalizador, totalizadorAnterior) => {
     const result = caudal_diario_m3(totalizador, totalizadorAnterior);
     try {
-        let calc = (((result * 1000) / 24) / 3600)
+        let calc = parseFloat((((result * 1000) / 24) / 3600).toFixed(2));
         return calc;
     } catch (error) {
         return 'Error en calculo.';
