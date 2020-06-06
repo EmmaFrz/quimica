@@ -1,6 +1,6 @@
 require('dotenv').config()
 
-function caudal_total_lodo_exceso(totalizador, totalizadorAnterior){
+const caudal_total_lodo_exceso = (totalizador, totalizadorAnterior) =>{
     if(totalizadorAnterior === ''){
         return;
     }else{
@@ -12,7 +12,7 @@ function caudal_total_lodo_exceso(totalizador, totalizadorAnterior){
     }
 }
 
-function edad_lodo(totalizador, totalizadorAnterior){
+const edad_lodo = (totalizador, totalizadorAnterior) => {
     let caudal = caudal_total_lodo_exceso(totalizador, totalizadorAnterior);
     try {
         return ((1761 * 2) + 1818) / caudal

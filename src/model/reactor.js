@@ -1,7 +1,7 @@
 require('dotenv').config()
 
 //Funcion que calcula el indice volumetrico del licor
-function ivl(v30, sst){
+const ivl = (v30, sst) =>{
     if(v30 !== ''){
         try {
             return ((v30*1000))/sst
@@ -14,7 +14,7 @@ function ivl(v30, sst){
 }
 
 //Funcion que calcula el indice volumetrico del licor
-function ivl_50(v30_50, sst){
+const ivl_50 = (v30_50, sst) =>{
     if(v30_50 !== ''){
         try {
             return ((v30_50*1000)/sst)

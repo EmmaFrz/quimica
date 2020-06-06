@@ -1,4 +1,4 @@
-let R = require('ramda');
+import * as R from 'ramda';
 require('dotenv').config()
 const arr1 = [441];
 const arr2 = [7824, 6991, 8038, 7663, 6869, 8381, 7640];
@@ -18,7 +18,7 @@ const promedioSolidoAfluente = 688;
 const promedioSolidoEfluente = 10; 
 const caudal2 = [1523];
 
-function carga_dbo_semanal(afluente, DBO){
+const carga_dbo_semanal = (afluente, DBO) => {
     if(afluente.length <= 7 ){
         if(DBO.length < 7){
             try {
@@ -38,7 +38,7 @@ function carga_dbo_semanal(afluente, DBO){
     
 }
 
-function fm_semanal(afluente, DBO, arr1 = [], arr2 = [], arr3 = [], arr4 = [], arr5 = [], arr6 = []){
+const fm_semanal = (afluente, DBO, arr1 = [], arr2 = [], arr3 = [], arr4 = [], arr5 = [], arr6 = []) => {
     const weekDBO = carga_dbo_semanal(afluente, DBO);
     let mean = R.mean(R.flatten([arr1, arr2, arr3, arr4, arr5, arr6]));
     const aproach1 = mean / 1000;
@@ -47,7 +47,7 @@ function fm_semanal(afluente, DBO, arr1 = [], arr2 = [], arr3 = [], arr4 = [], a
     return parseFloat(weekAverage.toFixed(3));
 }
 
-function carga_dbo_mensual(dbo){
+const carga_dbo_mensual = (dbo) => {
     if(dbo.length > 0){
         try {
             let mean = R.mean(dbo);
@@ -60,7 +60,7 @@ function carga_dbo_mensual(dbo){
     }
 }
 
-function fm_mensual(fm){
+const fm_mensual = (fm) => {
     if(fm.length > 0){
         try {
             let mean = R.mean(fm);
@@ -73,7 +73,7 @@ function fm_mensual(fm){
     }
 }
 
-function kg_dbo_removida_semanal(dboAfluente, dqoSemana, caudalDiarioAfluente){
+const kg_dbo_removida_semanal = (dboAfluente, dqoSemana, caudalDiarioAfluente) =>{
     try {
         let meanDbo = R.mean(dboAfluente);
         let meanDqo = R.mean(dqoSemana);
@@ -87,7 +87,7 @@ function kg_dbo_removida_semanal(dboAfluente, dqoSemana, caudalDiarioAfluente){
     }
 }
 
-function eficiencia_remocion_dbo_semanal(dboAfluente, dqoSemana){
+const eficiencia_remocion_dbo_semanal = (dboAfluente, dqoSemana) =>{
     try {
         let meanDbo = R.mean(dboAfluente);
         let meanDqo = R.mean(dqoSemana);
@@ -99,7 +99,7 @@ function eficiencia_remocion_dbo_semanal(dboAfluente, dqoSemana){
     }
 }
 
-function kg_solidos_suspendidos_totales_removidas_semanal(promedioSolidosSemanasAfluente, promedioSolidosSemanasEfluente, promedioCaudal){
+const kg_solidos_suspendidos_totales_removidas_semanal = (promedioSolidosSemanasAfluente, promedioSolidosSemanasEfluente, promedioCaudal) => {
     try {
         let meanCaudal = R.mean(promedioCaudal);
         let aproach1 = promedioSolidosSemanasAfluente - promedioSolidosSemanasEfluente;
