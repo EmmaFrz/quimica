@@ -7,7 +7,16 @@ const ssv1 = [2320];
 const ssv2 = [2070];
 const ssv3 = [2690];
 
+const dbo = [4.399, 4.1141, 3.646];
+const fm = [0.125, 0.093, 0.081, 0.098];
 
+const dboAfluente = [219];
+const dqoAfluente = [32];
+const caudal = [1078];
+
+const promedioSolidoAfluente = 688;
+const promedioSolidoEfluente = 10; 
+const caudal2 = [1523];
 
 function carga_dbo_semanal(afluente, DBO){
     if(afluente.length <= 7 ){
@@ -38,6 +47,77 @@ function fm_semanal(afluente, DBO, arr1 = [], arr2 = [], arr3 = [], arr4 = [], a
     return parseFloat(weekAverage.toFixed(3));
 }
 
+function carga_dbo_mensual(dbo){
+    if(dbo.length > 0){
+        try {
+            let mean = R.mean(dbo);
+            return parseFloat(mean.toFixed(3));
+        } catch (error) {
+            return error;
+        }
+    }else{
+        return 'Error, no existen datos';
+    }
+}
 
-console.log(carga_dbo_semanal(arr2, arr1))
-console.log(fm_semanal(arr2, arr1, ssv1, ssv2, ssv3,))
+function fm_mensual(fm){
+    if(fm.length > 0){
+        try {
+            let mean = R.mean(fm);
+            return parseFloat(mean.toFixed(3));
+        } catch (error) {
+            return error
+        }
+    }else{
+        return 'Error, no existen datos';
+    }
+}
+
+function kg_dbo_removida_semanal(dboAfluente, dqoSemana, caudalDiarioAfluente){
+    try {
+        let meanDbo = R.mean(dboAfluente);
+        let meanDqo = R.mean(dqoSemana);
+        let meanCaudal = R.mean(caudalDiarioAfluente);
+        let aproach1 = meanDbo - (meanDqo / 2) 
+        let aproach2 = (aproach1 * meanCaudal);
+        let aproach3 = aproach2 / 1000
+        return parseFloat(aproach3.toFixed(3))
+    } catch (error) {
+        return error
+    }
+}
+
+function eficiencia_remocion_dbo_semanal(dboAfluente, dqoSemana){
+    try {
+        let meanDbo = R.mean(dboAfluente);
+        let meanDqo = R.mean(dqoSemana);
+        let aproach1 = meanDbo - (meanDqo / 2);
+        let aproach2 = aproach1 / meanDbo;
+        return parseFloat(aproach2.toFixed(3));
+    } catch (error) {
+        return error;
+    }
+}
+
+function kg_solidos_suspendidos_totales_removidas_semanal(promedioSolidosSemanasAfluente, promedioSolidosSemanasEfluente, promedioCaudal){
+    try {
+        let meanCaudal = R.mean(promedioCaudal);
+        let aproach1 = promedioSolidosSemanasAfluente - promedioSolidosSemanasEfluente;
+        let aproach2 = aproach1 * meanCaudal;
+        let aproach3 = aproach2 / 1000;
+        return parseFloat(aproach3.toFixed(3));
+    } catch (error) {
+        return error
+    }
+}
+
+//eficiencia remocion solidos suspendidos totales semanales
+
+
+console.log(carga_dbo_semanal(arr2, arr1));
+console.log(fm_semanal(arr2, arr1, ssv1, ssv2, ssv3));
+console.log(carga_dbo_mensual(dbo));
+console.log(fm_mensual(fm));
+console.log(kg_dbo_removida_semanal(dboAfluente, dqoAfluente, caudal))
+console.log(eficiencia_remocion_dbo_semanal(dboAfluente, dqoAfluente));
+console.log(kg_solidos_suspendidos_totales_removidas_semanal(promedioSolidoAfluente, promedioSolidoEfluente, caudal2));
