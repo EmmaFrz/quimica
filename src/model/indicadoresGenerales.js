@@ -18,6 +18,16 @@ const promedioSolidoAfluente = 688;
 const promedioSolidoEfluente = 10; 
 const caudal2 = [1523];
 
+const promedioSolidoEficienciaAfluente = 224;
+const promedioSolidoEficienciaEfluente = 50;
+
+const solidoReactor1 = [30];
+const solidoReactor2 = [3800];
+
+const arrayReactor1 = [30, 30, 30, 30, 30, 30, 30];
+const arrayReactor2 = [3800, 3800, 3220, 3220, 2500, 2500, 2500];
+
+
 const carga_dbo_semanal = (afluente, DBO) => {
     if(afluente.length <= 7 ){
         if(DBO.length < 7){
@@ -111,8 +121,41 @@ const kg_solidos_suspendidos_totales_removidas_semanal = (promedioSolidosSemanas
     }
 }
 
-//eficiencia remocion solidos suspendidos totales semanales
+const eficiencia_remocion_solidos_suspendidos_totales_semanales = (promedioSolidosSemanasAfluente, promedioSolidosSemanasEfluente) => {
+    try {
+        let meanAfluente = promedioSolidosSemanasAfluente;
+        let meanEfluente = promedioSolidosSemanasEfluente;
+        let aproach1 = meanAfluente - meanEfluente;
+        let aproach2 = aproach1 / meanAfluente;
+        return parseFloat(aproach2.toFixed(3));
+    } catch (error) {
+        return error;
+    }
+}
 
+const solidos_suspendidos_totales_promedio = (arr1 = [], arr2 = [], arr3 = [], arr4 = [], arr5 = [], arr6 = []) => {
+    let mean = R.mean(R.flatten([arr1, arr2, arr3, arr4, arr5, arr6]));
+    return parseFloat(mean.toFixed(3));
+}
+
+const solidos_suspendidos_totales_reactores_semanales = (arr1 = [0], arr2 = [0], arr3 = [0], arr4 = [0], arr5 = [0], arr6 = [0]) => {
+    try {
+        let mean1 = R.mean(arr1);
+        let mean2 = R.mean(arr2);
+        let mean3 = R.mean(arr3);
+        let mean4 = R.mean(arr4);
+        let mean5 = R.mean(arr5);
+        let mean6 = R.mean(arr6);
+        let arr = [mean1, mean2, mean3, mean4, mean5, mean6];
+        let totalMean = R.pipe(
+            R.filter(x => x !== 0)
+        )(arr)
+        let totalApproach = R.mean(totalMean);    
+        return parseFloat(totalApproach.toFixed(3));
+    } catch (error) {
+        return error;
+    }
+};
 
 console.log(carga_dbo_semanal(arr2, arr1));
 console.log(fm_semanal(arr2, arr1, ssv1, ssv2, ssv3));
@@ -121,3 +164,6 @@ console.log(fm_mensual(fm));
 console.log(kg_dbo_removida_semanal(dboAfluente, dqoAfluente, caudal))
 console.log(eficiencia_remocion_dbo_semanal(dboAfluente, dqoAfluente));
 console.log(kg_solidos_suspendidos_totales_removidas_semanal(promedioSolidoAfluente, promedioSolidoEfluente, caudal2));
+console.log(eficiencia_remocion_solidos_suspendidos_totales_semanales(promedioSolidoEficienciaAfluente, promedioSolidoEficienciaEfluente));
+console.log(solidos_suspendidos_totales_promedio(solidoReactor1, solidoReactor2));
+console.log(solidos_suspendidos_totales_reactores_semanales(arrayReactor1, arrayReactor2));
