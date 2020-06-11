@@ -1,5 +1,4 @@
 import * as R from 'ramda';
-import { parse } from 'dotenv/types';
 require('dotenv').config();
 
 
